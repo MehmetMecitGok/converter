@@ -1,0 +1,28 @@
+version: '3'
+services:
+  app:
+    container_name: trendyoldocker
+    image: trendyoldocker
+    build: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-db
+    networks:
+      - trendyol-network
+    environment:
+      DATASOURCE_HOST: postgres-db
+  postgres-db:
+    image: postgres:latest
+    container_name: postgres-db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: trendyoldb
+    networks:
+      - trendyol-network
+networks:
+      trendyol-network:
